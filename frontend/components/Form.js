@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, } from 'react'
+import * as yup from 'yup'
 
 // 👇 Here are the validation errors you will use with Yup.
 const validationErrors = {
@@ -7,7 +8,21 @@ const validationErrors = {
   sizeIncorrect: 'size must be S or M or L'
 }
 
+
 // 👇 Here you will create your schema.
+
+const formSchema = yup.object().shape({
+  fullName: yup
+    .string()
+    .required("Full name is required")
+    .min(3, validationErrors.fullNameTooShort)
+    .max(20, validationErrors.fullNameTooLong),
+  size: yup
+    .string()
+    .required("Size is required")
+    .oneOf(['S', 'M', 'L'], validationErrors.sizeIncorrect)
+})
+
 
 // 👇 This array could help you construct your checkboxes using .map in the JSX.
 const toppings = [
@@ -19,11 +34,22 @@ const toppings = [
 ]
 
 export default function Form() {
+const [isSuccess, setIsSuccess] = useState(false)
+const [isFailure, setIsFailure] = useState(false)
+
+// const [formIsValid, setFormIsValid] = useState(false)
+
+// useEffect(() => {
+//   formSchema.isValid(formState)
+//   .then(vailid => setFormIsValid(valid))
+// },[formState])
+
   return (
     <form>
       <h2>Order Your Pizza</h2>
-      {true && <div className='success'>Thank you for your order!</div>}
-      {true && <div className='failure'>Something went wrong</div>}
+
+      {isSuccess && <div className='success'>Thank you for your order!</div>}
+      {isFailure && <div className='failure'>Something went wrong</div>}
 
       <div className="input-group">
         <div>
@@ -39,6 +65,9 @@ export default function Form() {
           <select id="size">
             <option value="">----Choose Size----</option>
             {/* Fill out the missing options */}
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
           </select>
         </div>
         {true && <div className='error'>Bad value</div>}
@@ -46,16 +75,19 @@ export default function Form() {
 
       <div className="input-group">
         {/* 👇 Maybe you could generate the checkboxes dynamically */}
-        <label key="1">
+      {toppings.map((topping, index) => (
+        <label key={index}>
           <input
-            name="Pepperoni"
+            name={topping.topping_id}
             type="checkbox"
           />
-          Pepperoni<br />
+          {topping.text}<br />
         </label>
+         ))}
       </div>
       {/* 👇 Make sure the submit stays disabled until the form validates! */}
       <input type="submit" />
+       {/* disabled={!formIsValid} */}
     </form>
   )
 }
