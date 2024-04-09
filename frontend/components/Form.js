@@ -11,8 +11,8 @@ const [formState, setFormState] = useState({
   green_peppers: "",
   pineapple: "",
   ham: "",
-  sausage: "",
-  special: "",
+  // sausage: "",
+  // special: "",
 });
 
 const [errors, setErrors] = useState({
@@ -22,8 +22,8 @@ const [errors, setErrors] = useState({
     green_peppers: "",
     pineapple: "",
     ham: "",
-    sausage: "",
-    special: "",
+    // sausage: "",
+    // special: "",
 })
 
 const [formIsValid, setFormIsValid] = useState(false);
@@ -49,8 +49,8 @@ const formSchema = yup.object().shape({
   green_peppers: yup.string(),
   pineapple: yup.string(),
   ham: yup.string(),
-  sausage: yup.string(),
-  special: yup.string(),
+  // sausage: yup.string(),
+  // special: yup.string(),
 })
 
 // 👇 This array could help you construct your checkboxes using .map in the JSX.
