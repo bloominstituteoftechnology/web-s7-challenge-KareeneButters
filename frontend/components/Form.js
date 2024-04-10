@@ -44,7 +44,7 @@ const validationErrors = {
 
 const formSchema = yup.object().shape({
   name: yup.string().min(2, "Name must be at least 2 characters").max(20, "Name must be at most 20 characters"), 
-  size: yup.string().oneOf(["xs", "s", "m", "l"], "Please select a size"),
+  size: yup.string().oneOf(["xs", "s", "m", "l"], "size must be S or M or L"),
   pepperoni: yup.string(),
   green_peppers: yup.string(),
   pineapple: yup.string(),

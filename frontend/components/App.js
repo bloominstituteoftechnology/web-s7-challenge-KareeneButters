@@ -6,20 +6,18 @@ import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 function App() {
   return (
     <div id="app">
-        {/* NavLinks here */}
-      {/* Route and Routes here */}
-    <Router>
-      <nav>
+    {/* NavLinks here */}
+    {/* Route and Routes here */}
+    <nav>
     <Link to="/">Home</Link>
-    <Link to="/form">Order</Link>
+    <Link to="/order">Order</Link>
     </nav>
     <Routes>
-      <Route path="/" element={<Home /> } />
-      <Route path="/form" element={<Form />} />
-      </Routes>
-    </Router>
+    <Route path="/" element={<Home /> } />
+    <Route path="/order" element={<Form />} />
+    </Routes>
     </div>
-  )
-}
+    )
+    }
 
 export default App
