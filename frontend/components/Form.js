@@ -4,16 +4,17 @@ import axios from 'axios'
 
 
 export default function Form() {
-const [formState, setFormState] = useState({
+const initialValue = {
   name: "",
   size: "",
   pepperoni: "",
   green_peppers: "",
   pineapple: "",
   ham: "",
-  // sausage: "",
-  // special: "",
-});
+}
+const [formState, setFormState] = useState(
+  initialValue
+);
 
 const [errors, setErrors] = useState({
     name: "",
@@ -44,7 +45,7 @@ const validationErrors = {
 
 const formSchema = yup.object().shape({
   name: yup.string().min(2, "Name must be at least 2 characters").max(20, "Name must be at most 20 characters"), 
-  size: yup.string().oneOf(["xs", "s", "m", "l"], "size must be S or M or L"),
+  size: yup.string().oneOf(["xs", "s", "m", "l"], "size must be XS or S or M or L"),
   pepperoni: yup.string(),
   green_peppers: yup.string(),
   pineapple: yup.string(),
@@ -67,7 +68,7 @@ const [isSuccess, setIsSuccess] = useState(false)
 const handleChangeCheckbox = e => {
   setFormState({
     ...formState,
-    [e.target.name]: e.target.checked
+    [e.target.name]: e.target.type === "checkbox" ? e.target.checked : e.target.formState
   })
 }
 
@@ -128,6 +129,16 @@ const handleSubmit = (event) => {
   event.preventDefault()
   axios.post("https://reqres.in/api/orders", formState) 
   .then((r) => setIsSuccess(true))
+  .catch (err => {
+    setErrors ({
+      ...errors,
+      [e.target.id]: err.errors[0]
+    })
+  })
+  .finally(
+  setFormState (
+    initialValue 
+  ))
 }
 
 const countToppings = () => {
@@ -170,7 +181,7 @@ const getSizeFullWord = (size) => {
       <div className="input-group">
         <div>
           <label htmlFor="fullName">Full Name</label><br />
-          <input placeholder="Type full name" id="name" type="text" name="name" onChange={handleChange} />
+          <input placeholder="Type full name" id="name" value={formState.name} type="text" name="name" onChange={handleChange} />
         </div>
         {errors.name ? <span>{errors.name}</span> : null}
       </div>

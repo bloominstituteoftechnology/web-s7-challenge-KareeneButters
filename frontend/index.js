@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './components/App'
 import './styles/reset.css'
 import './styles/styles.css'
-import { Router } from 'express'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 const domNode = document.getElementById('root')
 const root = createRoot(domNode)
